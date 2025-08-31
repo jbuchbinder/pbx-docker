@@ -1,14 +1,22 @@
-## What is this?
-Multiarch docker build for FusionPBX + Freeswitch(tested with x86_64 and armv7).
+## PBX-DOCKER
+
+Docker build for FusionPBX + Freeswitch(tested with x86_64 and armv7).
+
+This has been adjusted from upstream builds by:
+* Building sleeker images by separating out the build machines from the distribution machines (avoiding 900MB+ differential images)
+* Not using the signal repo (which is private), and building from git for dependencies.
 
 ## Build
+
 Run `build-freeswitch.sh` first to build the Freeswitch base image(takes the longest). This builds `arm/v7` and `amd64` by default but you can pass as parameter another arch that you need(e.g. `arm64`).  
 You then build the Dockerfile in the current file.
 
 ## Run
+
 You can just `docker-compose up -d` which will pull images from docker hub if they are not built locally.
 
 ## Mini How-To Multiarch builds
+
 There are no all-in one tutorials but you can read about multiarch builds [https://docs.docker.com/buildx/working-with-buildx/](here).  
 You will also need to enable binfmt and have qemu on your system which is the harder part.  
   

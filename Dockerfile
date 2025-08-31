@@ -1,5 +1,5 @@
-FROM fgst/freeswitch
-LABEL maintainer = Cristian Sandu <cristian.sandu@gmail.com>
+FROM jbuchbinder/freeswitch
+LABEL maintainer="Jeffrey Buchbinder <jeff@jbuchbinder.com>"
 
 ENV FUSION_PBX_BRANCH=master
 
