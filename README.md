@@ -26,3 +26,8 @@ A good tutorial on enabling binfmt and setting things up: [https://community.arm
   
 For QEMU use your distro's package or, if you are feeling adventurous(like I did), build it from source and use `checkinstall` so that it doesn't blow up your system: [https://www.qemu.org/download/](https://www.qemu.org/download/).  
 I used qemu 5.0.0 for this build.
+
+## TODO
+
+- [ ] Minimize build by installing libraries to /usr/local instead of bulk copying system libraries
+

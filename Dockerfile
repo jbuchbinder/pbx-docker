@@ -2,8 +2,11 @@ FROM jbuchbinder/freeswitch
 LABEL maintainer="Jeffrey Buchbinder <jeff@jbuchbinder.com>"
 
 ENV FUSION_PBX_BRANCH=master
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y nano
+RUN apt update && \
+    rm -f /etc/mime.types && \
+    apt install -y nano php7.4 wget nginx git
 
 # Setup NGINX
 RUN PHP_VERSION=$(php --version | head -1 | awk '{print $2}' | cut -d. -f 1-2) \
@@ -23,14 +26,14 @@ RUN git clone -b ${FUSION_PBX_BRANCH} https://github.com/fusionpbx/fusionpbx.git
 RUN chown -R www-data:www-data /var/www/fusionpbx
 
 # Copy freeswitch conf
-RUN cp -R /var/www/fusionpbx/resources/templates/conf/* /etc/freeswitch && chown -R www-data:www-data /etc/freeswitch
+RUN cp -R /var/www/fusionpbx/app/switch/resources/conf/* /etc/freeswitch && chown -R www-data:www-data /etc/freeswitch
 
 # Adjust RTP ports
 RUN sed -i /etc/freeswitch/autoload_configs/switch.conf.xml -e 's/<!-- <param name="rtp-start-port" value="16384"\/> -->/<param name="rtp-start-port" value="16384"\/>/g' && \
     sed -i /etc/freeswitch/autoload_configs/switch.conf.xml -e 's/<!-- <param name="rtp-end-port" value="32768"\/> -->/<param name="rtp-end-port" value="16390"\/>/g'
 
 # Copy the scripts
-RUN cp -R /var/www/fusionpbx/app/scripts/resources/scripts /usr/share/freeswitch && chown -R www-data:www-data /usr/share/freeswitch
+RUN cp -R /var/www/fusionpbx/app/switch/resources/scripts /usr/share/freeswitch && chown -R www-data:www-data /usr/share/freeswitch
 
 
 # Config dir and cleanup
